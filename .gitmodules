@@ -4,3 +4,6 @@
 [submodule "aoc-2022"]
 	path = aoc-2022
 	url = ./aoc-2022
+[submodule "project-euler"]
+	path = project-euler
+	url = ./project-euler
