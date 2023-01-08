@@ -1,15 +1,6 @@
-[submodule "synacor"]
-	path = synacor
-	url = ./aoc-2022
 [submodule "aoc-2022"]
-	path = aoc-2022
-	url = ./aoc-2022
-[submodule "project-euler"]
-	path = project-euler
-	url = ./project-euler
-[submodule "./aoc-2022"]
 	url = https://github.com/crawdaddie/aoc-2022
-[submodule "./synacor"]
+[submodule "synacor"]
 	url = https://github.com/crawdaddie/synacor
-[submodule "./project-euler"]
+[submodule "project-euler"]
 	url = https://github.com/crawdaddie/project-euler
