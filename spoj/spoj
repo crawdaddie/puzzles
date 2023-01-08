@@ -1,0 +1,24 @@
+#! /bin/bash
+source ./.spojrc
+function fetch_problem() {
+  dir=$1
+  if [ ! -d $dir ]
+  then mkdir -p $dir
+  fi
+  echo "https://rosalind.info/problems/$dir/" > $dir/README.md
+  html=$(curl -s "https://www.spoj.com/problems/$dir/")
+  echo $html | pup -p '#problem-body text{}' >> $dir/README.md
+}
+
+if [ $1 = 'fetch' ]
+then fetch_problem $2
+elif [ $1 = 'compute' ]
+then
+  if [ ! -d $2 ]
+  then fetch_problem $2
+  fi
+    fetch_full_dataset $2
+    # result=$(run $2)
+    # submit $2 "$result"
+    run $2
+fi

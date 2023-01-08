@@ -1,0 +1,6 @@
+[submodule "synacor"]
+	path = synacor
+	url = ./aoc-2022
+[submodule "aoc-2022"]
+	path = aoc-2022
+	url = ./aoc-2022

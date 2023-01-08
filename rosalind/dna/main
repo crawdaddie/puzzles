@@ -1,0 +1,11 @@
+#! /opt/homebrew/bin/python3
+import sys
+
+if __name__ == "__main__":
+    with open(sys.argv[1], mode='rt') as f:
+        counts = {'A': 0, 'C': 0, 'G': 0, 'T': 0}
+        puzzle_input = f.read()
+        for ch in puzzle_input:
+            if ch in 'ACGT':
+                counts[ch] += 1
+        print(f"{counts['A']} {counts['C']} {counts['G']} {counts['T']}")

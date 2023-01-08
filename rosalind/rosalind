@@ -1,0 +1,74 @@
+#! /bin/bash
+source ./.rosalindrc
+
+function fetch_problem() {
+  dir=$1
+  if [ ! -d $dir ]
+  then mkdir -p $dir
+  fi
+  echo "https://rosalind.info/problems/$dir/" > $dir/README.md
+  html=$(curl -s "https://rosalind.info/problems/$dir/")
+  echo $html | pup -p '.problem-statement > p text{}' >> $dir/README.md
+  echo $html | pup -p '#sample-dataset + .codehilite text{}' > $dir/test_input
+  echo $html | pup -p '#sample-output + .codehilite text{}' > $dir/test_output
+}
+
+function fetch_full_dataset() {
+  echo "fetching full dataset"
+  dir=$1
+  curl "https://rosalind.info/problems/$dir/dataset/" \
+    -H 'authority: rosalind.info' \
+    -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8' \
+    -H 'accept-language: en-GB,en;q=0.6' \
+    -H "cookie: $COOKIE" \
+    -H "referer: https://rosalind.info/problems/$dir/" \
+    -H 'sec-ch-ua: "Not?A_Brand";v="8", "Chromium";v="108", "Brave";v="108"' \
+    -H 'sec-ch-ua-mobile: ?0' \
+    -H 'sec-ch-ua-platform: "macOS"' \
+    -H 'sec-fetch-dest: document' \
+    -H 'sec-fetch-mode: navigate' \
+    -H 'sec-fetch-site: same-origin' \
+    -H 'sec-fetch-user: ?1' \
+    -H 'sec-gpc: 1' \
+    -H 'upgrade-insecure-requests: 1' \
+    -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36' \
+    --compressed > $dir/input
+
+}
+
+function run() {
+  $dir/main $dir/input
+}
+
+function submit() {
+  echo "submiting $2"
+
+  data_raw='----WebKitFormBoundaryMHVR5dO9ZDD1VSfZ\r\nContent-Disposition: form-data; name="output_text"\r\n\r\n'
+  data_raw+=$2
+  data_raw+='\r\n'
+
+  curl "https://rosalind.info/problems/$1/" \
+    -H 'authority: rosalind.info' \
+    -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8' \
+    -H 'accept-language: en-GB,en;q=0.6' \
+    -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundaryMHVR5dO9ZDD1VSfZ' \
+    -H "cookie: $COOKIE" \
+    -H "referer: https://rosalind.info/problems/$1/" \
+    -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36' \
+    --data-raw $"$data_raw" \
+    --compressed
+}
+
+
+if [ $1 = 'fetch' ]
+then fetch_problem $2
+elif [ $1 = 'compute' ]
+then
+  if [ ! -d $2 ]
+  then fetch_problem $2
+  fi
+    fetch_full_dataset $2
+    # result=$(run $2)
+    # submit $2 "$result"
+    run $2
+fi
