@@ -1,6 +1,9 @@
 [submodule "aoc-2022"]
+  path = "./aoc-2022"
 	url = https://github.com/crawdaddie/aoc-2022
 [submodule "synacor"]
+  path = "./synacor"
 	url = https://github.com/crawdaddie/synacor
 [submodule "project-euler"]
+  path = "./project-euler"
 	url = https://github.com/crawdaddie/project-euler
