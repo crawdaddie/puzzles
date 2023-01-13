@@ -4,3 +4,7 @@
 [submodule "project-euler"]
   path = project-euler
 	url = git@github.com:crawdaddie/project-euler.git
+
+[submodule "aoc-2022"]
+  path = aoc-2022
+	url = git@github.com:crawdaddie/aoc-2022.git
