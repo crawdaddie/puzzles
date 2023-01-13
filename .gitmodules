@@ -1,6 +1,3 @@
-[submodule "aoc-2022"]
-  path = aoc-2022
-	url = git@github.com:crawdaddie/aoc-2022.git
 [submodule "synacor"]
   path = synacor
 	url = git@github.com:crawdaddie/synacor.git
